@@ -1,9 +1,23 @@
+#include <ESP8266WiFi.h>
+#include <FirebaseArduino.h>
+
+// Set these to run example.
+#define FIREBASE_HOST "your FIREBASE HOST"
+#define FIREBASE_AUTH "your secret"
+#define WIFI_SSID "your WIFI SSID"
+#define WIFI_PASSWORD "your WIF PASSWORD"
+
+#include <IRremote.h>
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
 #include <TroykaMQ.h>
 #include <stdio.h>
 #include <Servo.h> //используем библиотеку для работы с сервоприводом
+
+IRrecv receiver(6); // create a receiver object of the IRrecv class
+decode_results results; // create a results object of the decode_results class
+bool alarm = false;
 
 Servo servo; //объявляем переменную servo типа Servo
 #define PIN_MQ2 A0
@@ -36,12 +50,38 @@ void setup() {
   dthKitchen.begin();
   dthBedroom.begin();
   dthHall.begin();
+  receiver.enableIRIn(); // enable the receiver
+
+    // connect to wifi.
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("connecting");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+  Serial.println();
+  Serial.print("connected: ");
+  Serial.println(WiFi.localIP());
+  
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 }
 
 void loop() {
+  if (receiver.decode(&results)) { // decode the received signal and store it in results
+    Serial.println(results.value, HEX); // print the values in the Serial Monitor
+    if (results.value == 16750695){
+      alarm = false;
+      Serial.println("alarm off");
+    }
+    else if (results.value == 16738455){
+      alarm = true;
+      Serial.println("alarm on");
+    }
+    receiver.resume(); // reset the receiver for the next code
+  }
+  
   GetData();
   SendFirebase();
-  delay(2000);
 }
 
 void GetData(){
