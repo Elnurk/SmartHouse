@@ -2,8 +2,8 @@
 #include <FirebaseArduino.h>
 
 // Set these to run example.
-#define FIREBASE_HOST "your FIREBASE HOST"
-#define FIREBASE_AUTH "your secret"
+#define FIREBASE_HOST "smart-house-47c31-default-rtdb.europe-west1.firebasedatabase.app"
+#define FIREBASE_AUTH "OhKAWgFTSZ4zlVHcyecLuQXGX5tYLLDiDbXs82FO"
 #define WIFI_SSID "your WIFI SSID"
 #define WIFI_PASSWORD "your WIF PASSWORD"
 
@@ -35,14 +35,12 @@ DHT dthHall(DthHall, DHT11);
 #define MoveKitchen 4
 #define MoveLong 5
 int mq2LPG = 0, mq2methane = 0, mq2smoke = 0, mq2hydrogen = 0;
-int waterK, waterB;
-int dthK, dthB, dthH;
-int moveH, moveB, moveK, moveL;
+int waterK, waterB; //water sensor values
+int dthK, dthB, dthH; //DTH Temperature values 
+int dthHK, dthHB, dthHH; //DTH Humidity values
+int moveH, moveB, moveK, moveL; //movement sensor values
 
 //infrare 6;
-
-#define FIREBASE_HOST "realairsmort.firebaseio.com" //Firebase project link
-#define FIREBASE_AUTH "dedvJsRv3jHcHplnFaPeJiPlsJKrOdNenfPCHWWr" //Firebase key
 
 void setup() {
   Serial.begin(9600);
@@ -103,6 +101,10 @@ void GetData(){
   dthK = dthKitchen.readTemperature();
   dthB = dthBedroom.readTemperature();
   dthH = dthHall.readTemperature();
+  
+  dthHK = dthKitchen.readHumidity();
+  dthHB = dthBedroom.readHumidity();
+  dthHH = dthHall.readHumidity();
 
   moveK = digitalRead(MoveKitchen);
   moveB = digitalRead(MoveBedroom);
@@ -111,6 +113,25 @@ void GetData(){
 }
 
 void SendFirebase(){
+  Firebase.setFloat("gas", mq2LPG);
+  if (Firebase.failed()) {
+      Serial.print("setting gas failed:");
+      Serial.println(Firebase.error());  
+      return; 
+  }
+  Firebase.setFloat("humidity", dthHK);
+  if (Firebase.failed()) {
+      Serial.print("setting humidity failed:");
+      Serial.println(Firebase.error());  
+      return; 
+  }
+  Firebase.setFloat("temperature", dthK);
+  if (Firebase.failed()) {
+      Serial.print("setting temperature failed:");
+      Serial.println(Firebase.error());  
+      return; 
+  }
+  
   Serial.println("");
   Serial.println(mq2LPG);
   Serial.println(waterK);
