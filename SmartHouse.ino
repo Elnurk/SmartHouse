@@ -4,8 +4,8 @@
 // Set these to run example.
 #define FIREBASE_HOST "smart-house-47c31-default-rtdb.europe-west1.firebasedatabase.app"
 #define FIREBASE_AUTH "OhKAWgFTSZ4zlVHcyecLuQXGX5tYLLDiDbXs82FO"
-#define WIFI_SSID "your WIFI SSID"
-#define WIFI_PASSWORD "your WIF PASSWORD"
+#define WIFI_SSID "ASPC_H3C"
+#define WIFI_PASSWORD "Fiks$20aspC#75T"
 
 #include <IRremote.h>
 #include <Adafruit_Sensor.h>
