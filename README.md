@@ -5,8 +5,10 @@ This repository contains the SmartHouse project, an IoT-enabled smart home contr
 ## Features
 
 - Reads temperature and humidity using a DHT sensor.
-- Controls home appliances via relay modules.
-- Provides a simple serial interface for monitoring and commands.
+- Monitors air quality using MQ sensors.
+- Checks for leaks in kitchen and basement using water level sensors.
+- Controls home appliances via IR remote.
+- Sends data to a real-time database for monitoring.
 - Modular design allows adding more sensors and actuators.
 
 ## Software / Stack
