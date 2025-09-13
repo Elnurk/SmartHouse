@@ -2,8 +2,8 @@
 #include <FirebaseArduino.h>
 
 // Set these to run example.
-#define FIREBASE_HOST "smart-house-47c31-default-rtdb.europe-west1.firebasedatabase.app"
-#define FIREBASE_AUTH "OhKAWgFTSZ4zlVHcyecLuQXGX5tYLLDiDbXs82FO"
+#define FIREBASE_HOST "123.europe-west1.firebasedatabase.app"
+#define FIREBASE_AUTH "123"
 #define WIFI_SSID "ASPC_H3C"
 #define WIFI_PASSWORD "Fiks$20aspC#75T"
 
@@ -144,3 +144,4 @@ void SendFirebase(){
   Serial.println(moveH);
   Serial.println(moveL);
 }
+
