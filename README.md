@@ -1,6 +1,6 @@
 # SmartHouse
 
-This repository contains the SmartHouse project, an IoT-enabled smart home controller built on Arduino. It monitors environmental conditions and provides remote control of connected devices.
+This repository contains the SmartHouse project, an IoT-enabled smart home controller built on ESP32.
 
 ## Features
 
@@ -8,14 +8,15 @@ This repository contains the SmartHouse project, an IoT-enabled smart home contr
 - Monitors air quality using MQ sensors.
 - Checks for leaks in kitchen and basement using water level sensors.
 - Controls home appliances via IR remote.
-- Sends data to a real-time database for monitoring.
+- Triggers sound and LED alarm when movement is noticed inside of the house while Guard Mode is active.
+- Sends data to a real-time database and serial for monitoring.
 - Modular design allows adding more sensors and actuators.
 
 ## Software / Stack
 
 - Language: C++
-- Platform: Arduino
-- Libraries: DHT sensor library (included under `library/` folder).
+- Platform: ESP32
+- Libraries: Included under `library/` folder
 
 ## Build & Run
 
